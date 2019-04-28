@@ -541,6 +541,11 @@
 			"style": {
 				"navigationBarTitleText": "震动"
 			}
+		}, {
+			"path": "pages/component/park/park",
+			"style": {
+				"navigationBarTitleText": "park"
+			}
 		}
 	],
 	"subPackages": [{

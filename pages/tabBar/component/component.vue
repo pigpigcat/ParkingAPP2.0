@@ -85,6 +85,12 @@
 						pages: ['map']
 
 					},
+					{
+						id:'testMap',
+						name:'天津地图',
+						open:false,
+						pages:['park']
+					},
 					// #endif
 					// #ifdef APP-PLUS
 					{
