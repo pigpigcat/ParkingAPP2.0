@@ -544,10 +544,16 @@
 		}, {
 			"path": "pages/component/park/park",
 			"style": {
-				"navigationBarTitleText": "park"
+				"navigationBarTitleText": "附近停车场"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/component/park/parkInfo",
+            "style" : {
+				"navigationBarTitleText": "查看停车场"
+			}
+        }
+    ],
 	"subPackages": [{
 			"root": "pages/extUI",
 			"pages": [{

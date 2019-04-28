@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<map :latitude="latitude" :longitude="longitude" :markers="markers" id="2" @markertap='markertap'>
+		<map :latitude="latitude" :longitude="longitude" :markers="markers" id="2" @markertap='markertap' :scale="scale">
 		</map>
 	</view>
 </template>
@@ -9,6 +9,7 @@
 	export default {
 		data() {
 			return {
+				scale: 18,
 				// 经度
 				longitude: 117.200983,
 				// 纬度
@@ -21,10 +22,10 @@
 							content: '三轻楼地上停车场'
 						},
 						// #ifdef APP-PLUS
-						iconPath: '../../../static/app-plus/location@3x.png',
+						iconPath: '/static/app-plus/location@3x.png',
 						// #endif
 						// #ifndef APP-PLUS
-						iconPath: '../../../static/location.png',
+						iconPath: '/static/location.png',
 						// #endif
 					}, {
 						id: 'B0FFHGLKOG',
@@ -34,10 +35,10 @@
 							content: '天津市人民政府地面停车场'
 						},
 						// #ifdef APP-PLUS
-						iconPath: '../../../static/app-plus/location@3x.png',
+						iconPath: '/static/app-plus/location@3x.png',
 						// #endif
 						// #ifndef APP-PLUS
-						iconPath: '../../../static/location.png',
+						iconPath: '/static/location.png',
 						// #endif
 					},
 					{
@@ -48,10 +49,10 @@
 							content: '停车场(欧亚花园东北)'
 						},
 						// #ifdef APP-PLUS
-						iconPath: '../../../static/app-plus/location@3x.png',
+						iconPath: '/static/app-plus/location@3x.png',
 						// #endif
 						// #ifndef APP-PLUS
-						iconPath: '../../../static/location.png',
+						iconPath: '/static/location.png',
 						// #endif
 					}
 				],
@@ -66,6 +67,12 @@
 				console.log('state:' + state);
 				console.log('经度:' + point.getLng() + ',纬度:' + point.getLat());
 			});
+			plus.geolocation.getCurrentPosition((position) => {
+				console.log("经度:" + position.coords.longitude);
+				console.log("纬度:" + position.coords.latitude);
+				this.longitude = position.coords.longitude;
+				this.latitude = position.coords.latitude;
+			})
 			// #endif
 			mapContext.moveToLocation();
 			mapContext.getCenterLocation({
@@ -77,7 +84,16 @@
 		},
 		methods: {
 			markertap(e) {
-				console.log(e.detail.markerId);
+				var markerId = e.detail.markerId;
+				this.markers.forEach((element) => {
+					if (element.id === markerId) {
+						console.log(element.label.content);
+					}
+				})
+				uni.navigateTo({
+					url: '/pages/component/park/parkInfo'
+				})
+
 			}
 		}
 	}
