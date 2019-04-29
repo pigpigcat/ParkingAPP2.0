@@ -7,7 +7,9 @@ const store = new Vuex.Store({
 	state: {
 		hasLogin: false,
 		loginProvider: "",
-		openid: null
+		openid: null,
+		parkInfo: null,
+		second: null
 	},
 	mutations: {
 		login(state, provider) {
@@ -20,11 +22,17 @@ const store = new Vuex.Store({
 		},
 		setOpenid(state, openid) {
 			state.openid = openid
+		},
+		setParkInfo(state, parkInfo) {
+			state.parkInfo = parkInfo
+		},
+		setSecond(state, second) {
+			state.second = second
 		}
 	},
 	actions: {
 		// lazy loading openid
-		getUserOpenId: async function ({
+		getUserOpenId: async function({
 			commit,
 			state
 		}) {
@@ -35,7 +43,7 @@ const store = new Vuex.Store({
 					uni.login({
 						success: (data) => {
 							commit('login')
-							setTimeout(function () { //模拟异步请求服务器获取 openid
+							setTimeout(function() { //模拟异步请求服务器获取 openid
 								const openid = '123456789'
 								console.log('uni.request mock openid[' + openid + ']');
 								commit('setOpenid', openid)

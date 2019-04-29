@@ -9,15 +9,15 @@
 	export default {
 		data() {
 			return {
-				scale: 18,
+				scale: 16,
 				// 经度
-				longitude: 117.200983,
+				longitude: 118.752973,
 				// 纬度
-				latitude: 39.084158,
+				latitude: 32.152974,
 				markers: [],
 			}
 		},
-		onReady() {
+		onShow() {
 			var mapContext = uni.createMapContext('park', this);
 			// #ifdef APP-PLUS
 			plus.navigator.setFullscreen(true);
@@ -28,24 +28,17 @@
 				this.request();
 			})
 			// #endif
-			// mapContext.moveToLocation();
-			// mapContext.getCenterLocation({
-			// 	success(res) {
-			// 		console.log(res.longitude)
-			// 		console.log(res.latitude)
-			// 	}
-			// })
 		},
 		methods: {
 			request() {
 				uni.request({
-					url: 'http://192.168.1.1:8888/parking/getParkingInfo',
+					url: 'http://chopper.6655.la/parking/getParkingInfo',
 					method: 'post',
 					data: {
 						'longitude': this.longitude,
 						'latitude': this.latitude
 					},
-					success(data, statusCode, header) {
+					success: (data, statusCode, header) => {
 						this.markers = data.data;
 					}
 				})
@@ -54,13 +47,12 @@
 				var markerId = e.detail.markerId;
 				this.markers.forEach((element) => {
 					if (element.id === markerId) {
-						console.log(element.label.content);
+						this.$store.commit("setParkInfo", element);
+						uni.navigateTo({
+							url: '/pages/park/parkInfo'
+						})
 					}
 				})
-				uni.navigateTo({
-					url: '/pages/component/park/parkInfo'
-				})
-
 			}
 		}
 	}
