@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view style="height: 100%;">
 		<map :latitude="latitude" :longitude="longitude" :markers="markers" id="2" @markertap='markertap' :scale="scale">
 		</map>
 	</view>
@@ -102,6 +102,6 @@
 <style>
 	map {
 		width: 100%;
-		height: 1000upx;
+		height: 100%;
 	}
 </style>
