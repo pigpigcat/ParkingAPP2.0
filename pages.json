@@ -18,6 +18,22 @@
 			}
 		},
 		{
+			"path": "pages/order/order_page",
+			"style": {
+				"navigationBarTitleText": "订单列表",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "\ue534",
+							"fontSrc": "/static/uni.ttf",
+							"fontSize": "22px",
+							"color": "#999999"
+						}]
+					}
+				}
+			}
+		},
+		{
 			"path": "pages/tabBar/API/API",
 			"style": {
 				"navigationBarTitleText": "接口",
