@@ -16,12 +16,12 @@
         },
         "modules" : {
             "OAuth" : {},
-            "Payment" : {},
             "Push" : {},
             "Share" : {},
             "Speech" : {},
             "VideoPlayer" : {},
-            "Maps" : {}
+            "Maps" : {},
+            "LivePusher" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -78,7 +78,8 @@
                         "appkey_ios" : "c34bbf3b1b027a8ff1db8602bde61add",
                         "appkey_android" : "c34bbf3b1b027a8ff1db8602bde61add"
                     }
-                }
+                },
+                "payment" : {}
             },
             "orientation" : [ "portrait-primary" ],
             "icons" : {
