@@ -7,7 +7,7 @@
 			订单支付成功
 		</view>
 		<view class="solid-bottom text-xxl padding">
-			<text class="text-price text-red">80.00</text>
+			<text class="text-price text-red">{{amount}}</text>
 		</view>
 		<view class="back">
 			<view class="btn" @tap="toUser">个人中心</view>
