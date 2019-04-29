@@ -33,7 +33,7 @@
 						 </view>
 						<view class="action-box b-t" v-if="item.state == 1">
 							<button class="action-btn" @click="cancelOrder(item)">取消订单</button>
-							<button class="action-btn recom">立即支付</button>
+							<button class="action-btn recom" @click="to_pay(item)">立即支付</button>
 						</view>
 						</uni-card>
 						
@@ -53,6 +53,7 @@
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 	import uniCard from '@/components/uni-card/uni-card.vue'
 	const order_List = [{
+		order_id:'1',
 		create_time: '2019-04-06 11:37',
 		state: 1,
 		parking_name:'有个停车场',
@@ -60,12 +61,14 @@
 		price:'150',
 	},
 	{
+		order_id:'2',
 		create_time: '2019-04-26 11:37',
 		state: 2,
 		parking_name:'有个停车场',
 		parking_place:'A区89号',
 		price:'100',
 	},{
+		order_id:'3',
 		create_time: '2019-04-16 11:37',
 		state: 1,
 		parking_name:'有个停车场',
@@ -182,6 +185,13 @@
 					
 					uni.hideLoading();
 				}, 600)
+			},
+			
+			to_pay(item){
+				var order_info =  JSON.stringify(item)
+				uni.navigateTo({
+					url:'../pay/payment/payment?order_info='+order_info
+				})
 			},
 
 			//订单状态文字和颜色
