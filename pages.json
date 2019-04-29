@@ -2,9 +2,9 @@
 	"pages": [
 		// pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/component/park/park",
+			"path": "pages/park/park",
 			"style": {
-				"navigationBarTitleText": "内置组件",
+				"navigationBarTitleText": "停车场",
 				"app-plus": {
 					"titleNView": {
 						"buttons": [{
@@ -638,13 +638,13 @@
 				"navigationBarTitleText": "震动"
 			}
 		}, {
-			"path": "pages/component/park/park",
+			"path": "pages/park/park",
 			"style": {
 				"navigationBarTitleText": "附近停车场"
 			}
 		}
 	    ,{
-            "path" : "pages/component/park/parkInfo",
+            "path" : "pages/park/parkInfo",
             "style" : {
 				"navigationBarTitleText": "查看停车场"
 			}
@@ -1161,7 +1161,7 @@
 		"borderStyle": "black",
 		"backgroundColor": "#F8F8F8",
 		"list": [{
-				"pagePath": "pages/component/park/park",
+				"pagePath": "pages/park/park",
 				"iconPath": "static/parking.png",
 				"selectedIconPath": "static/parkingHL.png",
 				"text": "停车场"
