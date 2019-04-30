@@ -15,6 +15,11 @@
 				<image class="img" :src="showPassword?'/static/shilu-login/op.png':'/static/shilu-login/cl.png'" @tap="display"></image>
 			</view>
 			<view class="list-call">
+				<image class="img" src="/static/shilu-login/2.png"></image>
+				<input class="biaoti" v-model="password_agin" type="text" maxlength="32" placeholder="再次输入密码" :password="!showPassword" />
+				<image class="img" :src="showPassword?'/static/shilu-login/op.png':'/static/shilu-login/cl.png'" @tap="display"></image>
+			</view>
+			<!-- <view class="list-call">
 				<image class="img" src="/static/shilu-login/3.png"></image>
 				<input class="biaoti" v-model="code" type="number" maxlength="4" placeholder="验证码" />
 				<view class="yzm" :class="{ yzms: second>0 }" @tap="getcode">{{yanzhengma}}</view>
@@ -22,7 +27,7 @@
 			<view class="list-call">
 				<image class="img" src="/static/shilu-login/4.png"></image>
 				<input class="biaoti" v-model="invitation" type="text" maxlength="12" placeholder="邀请码" />
-			</view>
+			</view> -->
 			
 		</view>
 		
@@ -53,7 +58,7 @@
 			return {
 				phoneno:'',
 				password:'',
-				code:'',
+				password_agin:'',
 				invitation:'',
 				xieyi:true,
 				showPassword:false,
@@ -80,31 +85,7 @@
 			xieyitong(){
 				this.xieyi = !this.xieyi;
 			},
-			getcode(){
-				if(this.second>0){
-					return;
-				}
-				this.second = 60;
-				uni.request({
-				    url: 'http://***/getcode.html', //仅为示例，并非真实接口地址。
-				    data: {phoneno:this.phoneno,code_type:'reg'},
-					method: 'POST',
-					dataType:'json',
-				    success: (res) => {
-						if(res.data.code!=200){
-							uni.showToast({title:res.data.msg,icon:'none'});
-						}else{
-							uni.showToast({title:res.data.msg});
-							js = setInterval(function(){
-								tha.second--;
-								if(tha.second==0){
-									clearInterval(js)
-								}
-							},1000)
-						}
-				    }
-				});
-			},
+			
 		    bindLogin() {
 				if (this.xieyi == false) {
 				    uni.showToast({
@@ -127,20 +108,19 @@
 		            });
 		            return;
 		        }
-				if (this.code.length != 4) {
+				if (this.password != this.password_agin ) {
 				    uni.showToast({
 				        icon: 'none',
-				        title: '验证码不正确'
+				        title: '两次输入密码不一致'
 				    });
 				    return;
 				}
+				
 				uni.request({
-				    url: 'http://***/reg.html',
+				    url: this.$api,
 				    data: {
 						phoneno:this.phoneno,
-						password:this.password,
-						code:this.code,
-						invitation:this.invitation
+						password:this.password
 					},
 					method: 'POST',
 					dataType:'json',
