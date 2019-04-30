@@ -34,10 +34,11 @@
 		},
 		onLoad() {
 			this.parkInfo = this.$store.state.parkInfo
-			this.vacancy = parseInt((Math.random() * 10)) - 1
+			this.vacancy = parseInt((Math.random() * 10))
 			if (this.vacancy === 0) {
 				this.park = '已满'
 				this.parkingDisabled = true
+				this.appointmentDisabled = true
 			}
 		},
 		methods: {
@@ -55,7 +56,24 @@
 				}, 1000)
 			},
 			parking() {
-				console.log('停车');
+				let userInfo = this.$store.state.userInfo
+				if (!userInfo) {
+					uni.navigateTo({
+						url: '/pages/'
+					})
+				} else {
+					uni.request({
+						url: this.$api + '/parking/doOrder',
+						method: 'post',
+						data: {
+							userInfo: userInfo,
+							parkInfo: this.parkInfo
+						},
+						success: (data) => {
+							console.log(data.data);
+						}
+					})
+				}
 			}
 		}
 	}

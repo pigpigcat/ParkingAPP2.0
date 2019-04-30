@@ -9,6 +9,7 @@ import store from './store'
 Vue.config.productionTip = false
 
 Vue.prototype.$store = store
+Vue.prototype.$api = "http://chopper.6655.la"
 Vue.prototype.$backgroundAudioData = {
 	playing: false,
 	playTime: 0,

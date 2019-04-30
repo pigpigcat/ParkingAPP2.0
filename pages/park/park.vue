@@ -32,7 +32,7 @@
 		methods: {
 			request() {
 				uni.request({
-					url: 'http://chopper.6655.la/parking/getParkingInfo',
+					url: this.$api + '/parking/getParkingInfo',
 					method: 'post',
 					data: {
 						'longitude': this.longitude,
@@ -40,6 +40,12 @@
 					},
 					success: (data, statusCode, header) => {
 						this.markers = data.data;
+					},
+					fail: () => {
+						uni.showToast({
+							title: '网络异常，请检查网络环境',
+							icon: 'none'
+						})
 					}
 				})
 			},
