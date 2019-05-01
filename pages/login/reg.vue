@@ -7,7 +7,7 @@
 		<view class="list">
 			<view class="list-call">
 				<image class="img" src="/static/shilu-login/1.png"></image>
-				<input class="biaoti" v-model="phoneno" type="number" maxlength="11" placeholder="手机号" />
+				<input class="biaoti" v-model="tel" type="number" maxlength="11" placeholder="手机号" />
 			</view>
 			<view class="list-call">
 				<image class="img" src="/static/shilu-login/2.png"></image>
@@ -56,7 +56,7 @@
 		},
 		data() {
 			return {
-				phoneno:'',
+				tel:'',
 				password:'',
 				password_agin:'',
 				invitation:'',
@@ -94,7 +94,7 @@
 				    });
 				    return;
 				}
-				if (this.phoneno.length !=11) {
+				if (this.tel.length !=11) {
 				    uni.showToast({
 				        icon: 'none',
 				        title: '手机号不正确'
@@ -117,22 +117,22 @@
 				}
 				
 				uni.request({
-				    url: this.$api,
+				    url: this.$api + '/user/reg',
 				    data: {
-						phoneno:this.phoneno,
+						tel:this.tel,
 						password:this.password
 					},
 					method: 'POST',
 					dataType:'json',
 				    success: (res) => {
 						if(res.data.code!=200){
-							uni.showToast({title:res.data.msg,icon:'none'});
+							uni.showToast({title:"注册成功",icon:'none'});
 						}else{
 							uni.showToast({title:res.data.msg});
-							setTimeout(function(){
-								uni.navigateBack();
-							},1500) 
 						}
+						setTimeout(function(){
+							uni.navigateBack();
+						},1000) 
 				    }
 				});
 				
