@@ -126,7 +126,7 @@
 					dataType:'json',
 				    success: (res) => {
 						if(res.data.code!=200){
-							uni.showToast({title:res.data.msg,icon:'none'});
+							uni.showToast({title:"注册成功",icon:'none'});
 							
 						}else{
 							uni.showToast({title:res.data.msg});
