@@ -106,16 +106,16 @@
 
 
 		},
-		
-		onShow(){
-			console.log("缓存="+uni.getStorageSync("order_index")+"||tabInder="+this.tabCurrentIndex)
-			
-			if( uni.getStorageSync("order_index") != this.tabCurrentIndex &&  uni.getStorageSync("order_index") ){
+
+		onShow() {
+			console.log("缓存=" + uni.getStorageSync("order_index") + "||tabInder=" + this.tabCurrentIndex)
+
+			if (uni.getStorageSync("order_index") != this.tabCurrentIndex && uni.getStorageSync("order_index")) {
 				this.tabCurrentIndex = uni.getStorageSync("order_index");
 				uni.removeStorageSync("order_index");
 				this.loadData()
 			}
-			
+
 		},
 
 		methods: {
@@ -137,11 +137,14 @@
 						url: this.$api + '/order/order_list',
 						data: {
 							tel: userInfo.tel,
-							state:state
+							state: state
 						},
 						dataType: 'json',
 						success: (res) => {
-							this.orderList = res.data;
+							res.data.data.forEach(item => {
+								item = Object.assign(item, this.orderStateExp(item.state));
+								this.orderList.push(item)
+							})
 						}
 					});
 				}
