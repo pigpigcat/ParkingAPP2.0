@@ -6,8 +6,15 @@
 		<view class="tis">
 			订单支付成功
 		</view>
-		<view class="solid-bottom text-xxl padding">
-			<text class="text-price text-red">{{amount}}</text>
+		<view class="uni-flex uni-column">
+			<view class="flex-item flex-item-V ">
+				<view class="solid-bottom text-xxl padding">
+					<text class="text-price text-red">{{amount}}</text>
+				</view>
+			</view>
+			<view class="flex-item flex-item-V" style="width: 400upx; height: 400upx">
+					<img style="height: 100%;" :src="src">
+			</view>
 		</view>
 		<view class="back">
 			<view class="btn" @tap="toUser">个人中心</view>
@@ -16,20 +23,41 @@
 </template>
 
 <script>
+	import tkiQrcode from '@/components/tki-qrcode/tki-qrcode.vue'
 	export default {
 		data() {
 			return {
-				amount:0
+				amount: 0,
+				order_info: {},
+				loadMake: true, // 组件加载完成后自动生成二维码
+				src: '' // 二维码生成后的图片地址或base64
 			};
 		},
+		
+		components: {
+			tkiQrcode
+		},
 		onLoad(e) {
-			var order_info = JSON.parse(e.order_info);
-			this.amount = parseFloat(order_info.price).toFixed(2);
+			this.order_info = JSON.parse(e.order_info);
+			this.load_qrcode(e.order_info);
+			this.amount = parseFloat(this.order_info.price).toFixed(2);
 		},
 		methods: {
 			toUser() {
-				uni.navigateTo({
+				uni.switchTab({
 					url: '/pages/PersonalCenter/PersonalCenter'
+				});
+			},
+			load_qrcode(order_info){
+				
+				uni.request({
+					url: this.$api + '/order/queryOrder',
+					data: order_info,
+					method: 'POST',
+					dataType: 'json',
+					success: (res) => {
+						this.src = res.data.qrCode
+					}
 				});
 			}
 		},
@@ -37,41 +65,52 @@
 </script>
 
 <style lang="scss">
-	view{
+	view {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 	}
-.icon{
-	width: 100%;
-	margin-top: 10vw;
-	image{
-		width: 25vw;
-		height: 25vw;
+
+	.icon {
+		width: 100%;
+		margin-top: 10vw;
+
+		image {
+			width: 25vw;
+			height: 25vw;
+		}
 	}
-}
-.tis{
-	width: 100%;
-	margin-top: 20upx;
-	font-size: 48upx;
-}
-.pay-amount{
-	width: 100%;
-	margin-top: 10upx;
-	font-size: 32upx;
-}
-.back{
-	position: absolute;
-	width: 100%;
-	bottom: 80upx;
-	.btn{
-		padding: 0 50upx;
-		height: 70upx;
-		border: solid 2upx #f06c7a;
-		color: #f06c7a;
-		align-items: center;
-		border-radius: 10upx;
-		font-size: 34upx;
+
+	.tis {
+		width: 100%;
+		margin-top: 20upx;
+		font-size: 48upx;
 	}
-}
+
+	.pay-amount {
+		width: 100%;
+		margin-top: 10upx;
+		font-size: 32upx;
+	}
+
+	.back {
+		position: absolute;
+		width: 100%;
+		bottom: 80upx;
+
+		.btn {
+			padding: 0 50upx;
+			height: 70upx;
+			border: solid 2upx #f06c7a;
+			color: #f06c7a;
+			align-items: center;
+			border-radius: 10upx;
+			font-size: 34upx;
+		}
+	}
+
+	.qrimg {
+		display: flex;
+		justify-content: center;
+	}
 </style>
