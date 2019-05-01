@@ -100,18 +100,29 @@
 		},
 
 		onLoad(options) {
-
 			// #ifndef MP
 			this.loadData()
 			// #endif
 
 
 		},
+		
+		onShow(){
+			console.log("缓存="+uni.getStorageSync("order_index")+"||tabInder="+this.tabCurrentIndex)
+			
+			if( uni.getStorageSync("order_index") != this.tabCurrentIndex &&  uni.getStorageSync("order_index") ){
+				this.tabCurrentIndex = uni.getStorageSync("order_index");
+				uni.removeStorageSync("order_index");
+				this.loadData()
+			}
+			
+		},
 
 		methods: {
 			//获取订单列表
 			loadData(source) {
 				//这里是将订单挂载到tab列表下
+				;
 				let index = this.tabCurrentIndex;
 				let navItem = this.navList[index];
 				let state = navItem.state;

@@ -2,21 +2,22 @@
 	<view class="content">
 		
 		<view class="list">
-			<view class="tishi">若您忘记了密码，可在此重新设置新密码。</view>
+			<view class="tishi">若您要修改密码，可在此重新设置新密码。</view>
 			<view class="list-call">
 				<image class="img" src="/static/shilu-login/1.png"></image>
 				<input class="biaoti" type="number" v-model="phoneno" maxlength="11" placeholder="请输入手机号" />
 			</view>
 			<view class="list-call">
 				<image class="img" src="/static/shilu-login/2.png"></image>
-				<input class="biaoti" type="text" v-model="password" maxlength="32" placeholder="请输入新密码" :password="!showPassword" />
+				<input class="biaoti" type="text" v-model="password_old" maxlength="32" placeholder="请输入旧密码" :password="!showPassword" />
 				<image class="img" :src="showPassword?'/static/shilu-login/op.png':'/static/shilu-login/cl.png'" @tap="display"></image>
 			</view>
 			<view class="list-call">
-				<image class="img" src="/static/shilu-login/3.png"></image>
-				<input class="biaoti" type="number" v-model="code" maxlength="4" placeholder="验证码" />
-				<view class="yzm" :class="{ yzms: second>0 }" @tap="getcode">{{yanzhengma}}</view>
+				<image class="img" src="/static/shilu-login/2.png"></image>
+				<input class="biaoti" type="text" v-model="password_new" maxlength="32" placeholder="请输入新密码" :password="!showPassword" />
+				<image class="img" :src="showPassword?'/static/shilu-login/op.png':'/static/shilu-login/cl.png'" @tap="display"></image>
 			</view>
+			
 		</view>
 		<view class="dlbutton" hover-class="dlbutton-hover" @tap="bindLogin()">
 			<text>修改密码</text>
@@ -34,55 +35,17 @@
 				second:0,
 				code:"",
 				showPassword:false,
-				password:''
+				password_old:'',
+				password_new:'',
 			}
 		},
 		onLoad(){
 			tha = this;
 		},
-		computed:{
-			yanzhengma(){
-				if(this.second==0){
-					return '获取验证码';
-				}else{
-					if(this.second<10){
-						return '重新获取0'+this.second;
-					}else{
-						return '重新获取'+this.second;
-					}
-				}
-			}
-		},
+		
 		methods: {
 			display() {
 			    this.showPassword = !this.showPassword
-			},
-			getcode(){
-				if(this.second>0){
-					return;
-				}
-				
-				uni.request({
-				    url: 'http://***/getcode.html', //仅为示例，并非真实接口地址。
-				    data: {phoneno:this.phoneno,code_type:'reg'},
-					method: 'POST',
-					dataType:'json',
-				    success: (res) => {
-						if(res.data.code!=200){
-							uni.showToast({title:res.data.msg,icon:'none'});
-							tha.second = 0;
-						}else{
-							uni.showToast({title:res.data.msg});
-							tha.second = 60;
-							js = setInterval(function(){
-								tha.second--;
-								if(tha.second==0){
-									clearInterval(js)
-								}
-							},1000)
-						}
-				    }
-				});
 			},
 			bindLogin() {
 				if (this.phoneno.length != 11) {
@@ -107,11 +70,11 @@
 				    return;
 				}
 				uni.request({
-				    url: 'http://***/forget.html',
+				    url: this.$api + '/user/foget',
 				    data: {
-						phoneno:this.phoneno,
-						password:this.password,
-						code:this.code
+						tel:this.phoneno,
+						password_new:this.password_new,//新密码
+						password:this.password_old//旧密码
 					},
 					method: 'POST',
 					dataType:'json',

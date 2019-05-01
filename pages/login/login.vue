@@ -42,7 +42,6 @@
 			};
 		},
 		methods: {
-			...mapMutations(['login']),
 		    bindLogin() {
 				if (this.phoneno.length != 11) {
 				     uni.showToast({
@@ -70,9 +69,10 @@
 						if(res.data.code!=200){
 							uni.showToast({title:res.data.msg,icon:'none'});
 						}else{
-							uni.setStorageSync('user_data', JSON.stringify(res.data.data));
-							this.login();
-							uni.navigateTO("pages/park/park");
+							uni.setStorageSync('userInfo', res.data.data);
+							uni.setStorageSync("login",true);
+							uni.navigateBack({
+							});
 						}
 				    }
 				});

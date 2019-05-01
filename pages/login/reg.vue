@@ -38,7 +38,7 @@
 		<view class="xieyi">
 			<image @tap="xieyitong" :src="xieyi==true?'/static/shilu-login/ty1.png':'/static/shilu-login/ty0.png'"></image>
 			<text @tap="xieyitong"> 同意</text>
-			<navigator url="blog?id=1" open-type="navigate">《软件用户协议》</navigator>
+			<navigator  open-type="navigate">《软件用户协议》</navigator>
 		</view>
 	</view>
 </template>
@@ -65,19 +65,7 @@
 				second:0
 			};
 		},
-		computed:{
-			yanzhengma(){
-				if(this.second==0){
-					return '获取验证码';
-				}else{
-					if(this.second<10){
-						return '重新获取0'+this.second;
-					}else{
-						return '重新获取'+this.second;
-					}
-				}
-			}
-		},
+		
 		methods: {
 			display() {
 			    this.showPassword = !this.showPassword
