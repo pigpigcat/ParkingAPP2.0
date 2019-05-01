@@ -54,14 +54,14 @@
 		        if (this.password.length < 6) {
 		            uni.showToast({
 		                icon: 'none',
-		                title: '密码不正确'
+		                title: '请输入大于6位数的密码'
 		            });
 		            return;
 		        }
 				uni.request({
-				    url: 'http://***/login.html',
+				    url: this.$api + '/user/login',
 				    data: {
-						phoneno:this.phoneno,
+						tel:this.phoneno,
 						password:this.password
 					},
 					method: 'POST',
@@ -72,7 +72,7 @@
 						}else{
 							uni.setStorageSync('user_data', JSON.stringify(res.data.data));
 							this.login();
-							uni.navigateBack();
+							uni.navigateTO("pages/park/park");
 						}
 				    }
 				});
