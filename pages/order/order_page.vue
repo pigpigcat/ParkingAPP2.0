@@ -12,8 +12,8 @@
 				<scroll-view class="list-scroll-content" scroll-y>
 
 					<!-- 订单列表 -->
-					<view v-for="(item,index) in orderList" :key="index" class="order-item">
-						<uni-card :is-full="true" :title="item.parking_name" :extra="item.create_time" thumbnail="https://img-cdn-qiniu.dcloud.net.cn/new-page/uni.png"
+					<view v-for="(item,index) in orderList" :key="index" class="order-item" @click="toOrder(item)">
+						<uni-card :is-full="true" :title="item.parking_name" :extra="item.create_time" thumbnail="/static/shilu-login/logo.png"
 						 :note="item.create_time">
 							<view class="uni-flex uni-row" style="justify-content: space-between;">
 								<view class="text"></view>
@@ -28,9 +28,6 @@
 								<button class="action-btn recom" @click="to_pay(item)">立即支付</button>
 							</view>
 						</uni-card>
-
-
-
 					</view>
 
 					<uni-load-more :status="tabItem.loadingType"></uni-load-more>
@@ -45,9 +42,9 @@
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 	import uniCard from '@/components/uni-card/uni-card.vue'
 	const order_List = [{
-			order_id: '1',
+			order_id: '99',
 			create_time: '2019-04-06 11:37',
-			state: 1,
+			state: 2,
 			parking_name: '有个停车场',
 			parking_place: 'A区88号',
 			price: '150',
@@ -55,7 +52,7 @@
 		{
 			order_id: '2',
 			create_time: '2019-04-26 11:37',
-			state: 2,
+			state: 1,
 			parking_name: '有个停车场',
 			parking_place: 'A区89号',
 			price: '100',
@@ -100,6 +97,7 @@
 		},
 
 		onLoad(options) {
+			console.log(JSON.stringify(order_List[1]));
 			// #ifndef MP
 			this.loadData()
 			// #endif
@@ -122,17 +120,21 @@
 			//获取订单列表
 			loadData(source) {
 				//这里是将订单挂载到tab列表下
-				;
+				
 				let index = this.tabCurrentIndex;
 				let navItem = this.navList[index];
 				let state = navItem.state;
-				let userInfo = this.$store.state.userInfo;
+				let userInfo = uni.getStorageSync("userInfo");
 				if (!userInfo) {
 					//loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
 					this.$set(navItem, 'loaded', true);
 					// 	//判断是否还有数据， 有改为 more， 没有改为noMore 
 					navItem.loadingType = 'nomore';
 				} else {
+					// order_List.forEach(item => {
+					// 			item = Object.assign(item, this.orderStateExp(item.state));
+					// 			this.orderList.push(item)
+					// 			})
 					uni.request({
 						url: this.$api + '/order/order_list',
 						data: {
@@ -148,31 +150,18 @@
 						}
 					});
 				}
-				/* // navItem.orderList.splice(0,navItem.orderList.length); 
-				// setTimeout(()=>{
-				// 	//返回Json.order_List中订单状态等于state的List
-				// 	let orderList = order_List.filter(item=>{
-				// 		//添加不同状态下订单的表现形式
-				// 		//orderStateExp，返回订单状态含颜色和文字的对象，与item合并成一个对象
-				// 		item = Object.assign(item, this.orderStateExp(item.state));
-				// 		//演示数据所以自己进行状态筛选
-				// 		if(state === 0){
-				// 			//0为全部订单
-				// 			return item;
-				// 		}
-				// 		return item.state === state
-				// 	});
-				// 	orderList.forEach(item=>{
-				// 		navItem.orderList.push(item);
-				// 	})
-				// 	//loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
-				// 	this.$set(navItem, 'loaded', true);
-				// 	
-				// 	//判断是否还有数据， 有改为 more， 没有改为noMore 
-				// 	navItem.loadingType = 'nomore';
-				// }, 600); */
+				
 			},
-
+			toOrder(oderInfo){
+				if(oderInfo.state != '1')
+				{
+					var order_Info = JSON.stringify(oderInfo)
+					uni.navigateTo({
+						url: '/pages/pay/success/success?order_info=' + order_Info
+					});
+				}
+				
+			},
 			//swiper 切换
 			changeTab(e) {
 				this.tabCurrentIndex = e.target.current;
@@ -234,6 +223,9 @@
 						break;
 					case 2:
 						stateTip = '待使用';
+						break;
+					case 3:
+						stateTip = '完成';
 						break;
 					case 9:
 						stateTip = '订单已关闭';
