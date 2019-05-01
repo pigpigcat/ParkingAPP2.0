@@ -64,6 +64,18 @@
 						this.src = res.data.qrCode
 					}
 				});
+			},
+			load_qrcode(order_info){
+				
+				uni.request({
+					url: this.$api + '/order/queryOrder',
+					data: order_info,
+					method: 'POST',
+					dataType: 'json',
+					success: (res) => {
+						this.src = res.data.qrCode
+					}
+				});
 			}
 		},
 	}
