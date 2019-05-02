@@ -32,7 +32,7 @@
 		methods: {
 			request() {
 				uni.request({
-					url: this.$api + '/parking/getParkingInfo',
+					url: this.$api + '/getParkingInfo',
 					method: 'post',
 					data: {
 						'longitude': this.longitude,

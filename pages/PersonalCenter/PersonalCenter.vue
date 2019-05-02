@@ -139,7 +139,7 @@
 					if (this.severList[list_i][li_i].name == "全部订单") {
 						uni.setStorageSync('order_index', this.severList[list_i][li_i].index);
 					}
-					uni.reLaunch({
+					uni.navigateTo({
 						url: this.severList[list_i][li_i].url
 					})
 				}

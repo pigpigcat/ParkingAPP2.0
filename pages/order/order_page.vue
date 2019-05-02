@@ -13,14 +13,14 @@
 
 					<!-- 订单列表 -->
 					<view v-for="(item,index) in orderList" :key="index" class="order-item" @click="toOrder(item)">
-						<uni-card :is-full="true" :title="item.parking_name" :extra="item.create_time" thumbnail="/static/shilu-login/logo.png"
+						<uni-card :is-full="true" :title="item.parkingName" :extra="item.create_time" thumbnail="/static/shilu-login/logo.png"
 						 :note="item.create_time">
 							<view class="uni-flex uni-row" style="justify-content: space-between;">
 								<view class="text"></view>
 								<view class="text" :style="{color: item.stateTipColor}">{{item.stateTip}}</view>
 							</view>
 							<view class="uni-flex uni-row" style="justify-content: space-between;">
-								<view class="text price-box">车位:<text class="parking-place">{{item.parking_place}}</text></view>
+								<view class="text price-box">车位:<text class="parking-place">{{item.parkingPlace}}</text></view>
 								<view class="text price-box">实付款:<text class="price">{{item.price}}</text></view>
 							</view>
 							<view class="action-box b-t" v-if="item.state == 1">
@@ -120,7 +120,7 @@
 			//获取订单列表
 			loadData(source) {
 				//这里是将订单挂载到tab列表下
-				
+
 				let index = this.tabCurrentIndex;
 				let navItem = this.navList[index];
 				let state = navItem.state;
@@ -136,31 +136,40 @@
 					// 			this.orderList.push(item)
 					// 			})
 					uni.request({
-						url: this.$api + '/order/order_list',
-						data: {
-							tel: userInfo.tel,
-							state: state
-						},
+						url: this.$api + '/order/order_list?state=' + state,
+						data: userInfo,
+						method: 'POST',
 						dataType: 'json',
 						success: (res) => {
-							res.data.data.forEach(item => {
-								item = Object.assign(item, this.orderStateExp(item.state));
-								this.orderList.push(item)
+							// res.data.data.forEach(item => {
+							// 	item = Object.assign(item, this.orderStateExp(item.state));
+							// 	this.orderList.push(item)
+							// })
+							this.orderList = res.data
+							res.data.forEach((element) => {
+								let date = new Date(element.gmtCreate);
+								let year = date.getFullYear();
+								let month = date.getMonth();
+								let day = date.getDay();
+								let hour = date.getHours();
+								let minute = date.getMinutes();
+								let second = date.getSeconds();
+								let formatDate = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+								element.create_time = formatDate;
 							})
 						}
 					});
 				}
-				
+
 			},
-			toOrder(oderInfo){
-				if(oderInfo.state != '1')
-				{
+			toOrder(oderInfo) {
+				if (oderInfo.state != '1') {
 					var order_Info = JSON.stringify(oderInfo)
 					uni.navigateTo({
 						url: '/pages/pay/success/success?order_info=' + order_Info
 					});
 				}
-				
+
 			},
 			//swiper 切换
 			changeTab(e) {

@@ -54,7 +54,7 @@
 			</view>
 		</view>
 		<view class="qrimg" style="visibility: hidden;">
-			<tki-qrcode ref="qrcode" :val="order_info.order_id" :size="size" :unit="unit" :icon="icon" :iconSize="iconsize"
+			<tki-qrcode ref="qrcode" :val="order_info.orderId" :size="size" :unit="unit" :icon="icon" :iconSize="iconsize"
 			 @result="qrR" />
 		</view>
 	</view>

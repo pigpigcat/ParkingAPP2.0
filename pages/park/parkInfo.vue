@@ -56,21 +56,25 @@
 				}, 1000)
 			},
 			parking() {
-				let userInfo = this.$store.state.userInfo
+				let userInfo = uni.getStorageSync("userInfo");
 				if (!userInfo) {
 					uni.navigateTo({
-						url: '/pages/'
+						url: '/pages/login/login'
 					})
 				} else {
 					uni.request({
-						url: this.$api + '/parking/doOrder',
+						url: this.$api + '/doOrder',
 						method: 'post',
 						data: {
 							userInfo: userInfo,
 							parkInfo: this.parkInfo
 						},
-						success: (data) => {
-							console.log(data.data);
+						success: (data) => {								
+							if(data.data.code == 200) {
+								uni.switchTab({
+									url: '/pages/order/order_page'
+								})
+							}
 						}
 					})
 				}
