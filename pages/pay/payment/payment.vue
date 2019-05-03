@@ -75,7 +75,7 @@
 				paytype: 'alipay', //支付类型
 				size: 200, // 二维码大小
 				unit: 'upx', // 单位
-				icon: '/static/shilu-login/logo.png', // 二维码图标
+				icon: 'static/logo/logo.png', // 二维码图标
 				iconsize: 40, // 二维码图标大小
 				loadMake: false, // 组件加载完成后自动生成二维码
 				src: '', // 二维码生成后的图片地址或base64

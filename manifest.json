@@ -84,7 +84,7 @@
             "orientation" : [ "portrait-primary" ],
             "icons" : {
                 "ios" : {
-                    "appstore" : "C:/Users/Administrator/Desktop/微信图片_20190428150545.png",
+                    "appstore" : "static/logo/logo.png",
                     "ipad" : {
                         "app" : "unpackage/res/icons/76x76.png",
                         "app@2x" : "unpackage/res/icons/152x152.png",
@@ -118,9 +118,9 @@
             },
             "splashscreen" : {
                 "android" : {
-                    "hdpi" : "C:/Users/Administrator/Desktop/微信图片_20190428151439.png",
-                    "xhdpi" : "C:/Users/Administrator/Desktop/微信图片_20190428151508.png",
-                    "xxhdpi" : "C:/Users/Administrator/Desktop/微信图片_20190428151515.png"
+                    "hdpi" : "static/logo/run.png",
+                    "xhdpi" : "static/logo/run2.png",
+                    "xxhdpi" : "static/logo/run3.png"
                 }
             }
         }
