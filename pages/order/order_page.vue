@@ -113,6 +113,9 @@
 				uni.removeStorageSync("order_index");
 				this.loadData()
 			}
+			else{
+				this.loadData()
+			}
 
 		},
 

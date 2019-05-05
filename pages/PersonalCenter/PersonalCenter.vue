@@ -116,10 +116,20 @@
 				} */
 				let userInfo = uni.getStorageSync("userInfo");
 				if (userInfo) {
+					uni.request({
+						url: this.$api + '/user/getUserInfo',
+						method: 'POST',
+						data: {
+							userId:userInfo.userId
+						},
+						success: res => {
+							this.userinfo = userInfo
+							console.log(this.userinfo)
+							this.login = true;
+						},
+					});
 					//loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
-					this.userinfo = userInfo
-					console.log(this.userinfo)
-					this.login = true;
+					
 					// 	//判断是否还有数据， 有改为 more， 没有改为noMore 
 				}
 
